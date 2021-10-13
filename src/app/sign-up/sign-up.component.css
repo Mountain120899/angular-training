@@ -1,0 +1,24 @@
+.login-container{
+    margin: auto;
+    width: 35%;
+    padding: 25px 0px;
+    border-radius: 5px;
+}
+h1{
+    font-size: xx-large;
+    font-weight: 900;
+    color: #424242;
+}
+form{
+    width: 75%;
+}
+.red{
+    color: #f06292;
+    cursor: pointer;
+}
+.sign-up{
+    text-align: center;
+}
+a{
+    color: #f06292;
+}

@@ -1,0 +1,129 @@
+<div class="table-container mat-elevation-z10">
+  <h2 *ngIf="currentUser">hello {{currentUser}}</h2>
+  <div fxLayoutAlign="space-between" class="header">
+    <mat-form-field [class.filter]="true" appearance="standard" *ngIf="fieldSearch">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Type something here" #input (click)="drawer.close()" [formControl]="keySearch">
+    </mat-form-field>
+    <span *ngIf="!fieldSearch" class="userNumber">{{numberUserChecked}} users</span>
+    <div class="ulitiles">
+      <ng-container *ngTemplateOutlet="rightTool"></ng-container>
+    </div>
+  </div>
+  <mat-drawer-container class="side-nav-container" autosize>
+    <table mat-table matSort [dataSource]="dataSource" [formGroup]="checkedFormGroup">
+    <ng-container matColumnDef="check">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="setAll($event.checked)" [indeterminate]="someComplete()" [checked]="allComplete"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="allComplete" [formControlName]="element._id" (change)="setOne($event.checked)"></mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> NAME </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="address"> ADDRESS </th>
+      <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+    </ng-container>
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="phone"> PHONE </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+    <ng-container matColumnDef="birthday">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="birthday"> BIRTHDAY </th>
+      <td mat-cell *matCellDef="let element"> {{element.birthday | date}} </td>
+    </ng-container>
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="gender"> GENDER </th>
+      <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+    </ng-container>
+    <ng-container matColumnDef="average">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="average"> AVERAGE </th>
+      <td [class.average]="true" mat-cell *matCellDef="let element"> {{element.average}} </td>
+    </ng-container>
+    <ng-container matColumnDef="more" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef class="hide-column">
+        <mat-menu #hideColumnMenu="matMenu" (closed)="getDisplayedColumns()">
+          <ng-container *ngTemplateOutlet="hideColumn"></ng-container>
+        </mat-menu>
+        <mat-icon *ngIf="hide" [matMenuTriggerFor]="hideColumnMenu" matTooltip="Hide Column">visibility</mat-icon>
+        <mat-icon *ngIf="!hide" [matMenuTriggerFor]="hideColumnMenu" matTooltip="Hide Column">visibility_off</mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let element" class="edit">
+        <mat-menu #editMenu="matMenu">
+          <ng-template matMenuContent let-id="id">
+            <button mat-menu-item (click)="openUpdateDialog(id)"><mat-icon>settings</mat-icon>Update</button>
+            <button mat-menu-item (click)="Delete(id)"><mat-icon>delete</mat-icon>Delete</button>
+          </ng-template>
+        </mat-menu>
+        <button class="edit" mat-icon-button [matMenuTriggerFor]="editMenu" [matMenuTriggerData]="{id: element._id}" matTooltip="Update or delete user">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsArray sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsArray" [ngClass]="{'red': row.average < 5, 'blue': row.average >= 5 && row.average <= 8, 'green': row.average >=8}"></tr>
+  
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{keySearch.value}}"</td>
+    </tr>
+    </table>
+    <mat-drawer #drawer mode="side" position="end" class="side-nav-drawer">
+      <mat-dialog-content [formGroup]="options">
+        <label>Gender</label>
+        <mat-radio-group class="radio-group" (change)="filterGender()" formControlName="gender">
+          <mat-radio-button value='male' class="radio-button">Male</mat-radio-button>
+          <mat-radio-button value='female' class="radio-button">Female</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field appearance="outline" class="city-label">
+          <mat-label>City</mat-label>
+          <mat-select formControlName="city" (selectionChange)="cityChange()">
+            <mat-option>-- None --</mat-option>
+            <mat-option *ngFor="let city of cityList" [value]="city">
+              {{city}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-dialog-content>
+    </mat-drawer>
+  </mat-drawer-container>
+  <mat-paginator class="paging"  [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" aria-label="Select page of users"></mat-paginator>
+</div>
+
+<ng-template #rightTool>
+  <mat-icon matTooltip="Export" (click)="downLoadPDF()" [class.display]="formSettingMenu.get('export')?.value">file_download</mat-icon>
+  <mat-icon (click)="openCreateDialog()" matTooltip="Create new user" [class.display]="formSettingMenu.get('create')?.value">edit</mat-icon>
+  <mat-icon matTooltip="Filter" (click)="drawer.toggle()" [class.display]="formSettingMenu.get('filter')?.value">filter_list</mat-icon>
+  <mat-icon [matMenuTriggerFor]="settingMenu" matTooltip="Settings">settings</mat-icon>
+  <mat-menu #settingMenu="matMenu">
+    <div fxLayout="column" [formGroup]="formSettingMenu">
+      <mat-checkbox class="item-hide-column" (click)="$event.stopPropagation();" formControlName="export">Export</mat-checkbox>
+      <mat-checkbox class="item-hide-column" (click)="$event.stopPropagation();" formControlName="create">Create</mat-checkbox>
+      <mat-checkbox class="item-hide-column" (click)="$event.stopPropagation();" formControlName="filter">Filter</mat-checkbox>
+    </div>
+  </mat-menu>
+</ng-template>
+
+
+<ng-template #hideColumn>
+  <div fxLayout="column" matMenuContent [formGroup]="formHideColumn">
+    <mat-checkbox class="item-hide-column" [disabled]="true" formControlName="id">id</mat-checkbox>
+    <mat-checkbox class="item-hide-column" [disabled]="true" formControlName="name">Name</mat-checkbox>
+    <mat-checkbox class="item-hide-column" (click)="$event.stopPropagation(); " formControlName="address">Address</mat-checkbox>
+    <mat-checkbox class="item-hide-column" (click)="$event.stopPropagation(); " formControlName="phone">Phone</mat-checkbox>
+    <mat-checkbox class="item-hide-column" (click)="$event.stopPropagation(); " formControlName="birthday">Birthday</mat-checkbox>
+    <mat-checkbox class="item-hide-column" (click)="$event.stopPropagation(); " formControlName="gender">Gender</mat-checkbox>
+    <mat-checkbox class="item-hide-column" (click)="$event.stopPropagation(); " formControlName="average">Average</mat-checkbox>
+    <mat-checkbox class="item-hide-column" [disabled]="true" formControlName="more">More</mat-checkbox>
+  </div>
+</ng-template>
+
+
+
+

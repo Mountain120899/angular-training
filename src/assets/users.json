@@ -1,0 +1,112 @@
+[
+    {
+      "_id": 1,
+      "name": "Tran Minh Nhat",
+      "address": "Ho Chi Minh",
+      "phone": "123564",
+      "birthday": "08-12-1999",
+      "gender": "male",
+      "average": 2,
+      "email": "nhat@gmail.com",
+      "password": "123456"
+    },
+    {
+        "_id": 2,
+        "name": "Nguyen Van A",
+        "address": "Ha Noi",
+        "phone": "0125844",
+        "birthday": "05-12-2000",
+        "gender": "female",
+        "average": 5,
+        "email": "a@gmail.com",
+        "password": "123456"
+    },
+    {
+        "_id": 3,
+        "name": "Nguyen Van B",
+        "address": "Ha Nam",
+        "phone": "0125844s",
+        "birthday": "10-07-2001",
+        "gender": "male",
+        "average": 7,
+        "email": "b@gmail.com",
+        "password": "123456"
+    },
+    {
+        "_id": 4,
+        "name": "Nguyen Van C",
+        "address": "Ninh Binh",
+        "phone": "012566844",
+        "birthday": "06-20-1998",
+        "gender": "female",
+        "average": 8,
+        "email": "c@gmail.com",
+        "password": "123456"
+    },
+    {
+        "_id": 5,
+        "name": "Nguyen Thi D",
+        "address": "Ha Noi",
+        "phone": "012584422",
+        "birthday": "02-15-2000",
+        "gender": "female",
+        "average": 10,
+        "email": "d@gmail.com",
+        "password": "123456"
+    },
+    {
+        "_id": 6,
+        "name": "Nguyen Van E",
+        "address": "Ha Noi",
+        "phone": "012584422",
+        "birthday": "04-09-2002",
+        "gender": "female",
+        "average": 9,
+        "email": "e@gmail.com",
+        "password": "123456"
+    },
+    {
+        "_id": 7,
+        "name": "Nguyen Van F",
+        "address": "Ha Noi",
+        "phone": "012584422",
+        "birthday": "08-05-2001",
+        "gender": "male",
+        "average": 8,
+        "email": "f@gmail.com",
+        "password": "123456"
+    },
+    {
+        "_id": 8,
+        "name": "Nguyen Van H",
+        "address": "Ha Noi",
+        "phone": "012584422",
+        "birthday": "06-02-2001",
+        "gender": "female",
+        "average": 7,
+        "email": "h@gmail.com",
+        "password": "123456"
+    },
+    {
+        "_id": 9,
+        "name": "Nguyen Van K",
+        "address": "Ben Tre",
+        "phone": "012584422",
+        "birthday": "07-02-2001",
+        "gender": "male",
+        "average": 7,
+        "email": "k@gmail.com",
+        "password": "123456"
+    },
+    {
+        "_id": 10,
+        "name": "Nguyen Van M",
+        "address": "Quang Ngai",
+        "phone": "012584422",
+        "birthday": "06-02-1997",
+        "gender": "female",
+        "average": 7,
+        "email": "m@gmail.com",
+        "password": "123456"
+    }
+]

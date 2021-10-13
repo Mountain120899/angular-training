@@ -1,0 +1,14 @@
+button{
+    border: none;
+    padding: 5px 10px;
+}
+button:hover{
+    opacity: 0.8;
+}
+.mat-primary{
+    margin-left: 10px;
+}
+mat-icon{
+    position: relative;
+    top:6px;
+}

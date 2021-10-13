@@ -1,0 +1,30 @@
+
+<h2 mat-dialog-title>{{description}}</h2>
+
+<mat-dialog-content [formGroup]="userForm">
+    <div fxLayout="column" fxLayoutAlign="space-between">
+        <mat-form-field>
+            <input matInput type="text" placeholder="Name" formControlName="name" required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" placeholder="Address" formControlName="address" required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="tel" placeholder="Phone" formControlName="phone" required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="date" placeholder="Birthday" formControlName="birthday" required>
+        </mat-form-field>
+        <mat-radio-group formControlName="gender" fxLayout="column" fxLayoutGap="5px">
+            <mat-radio-button value="male">Male</mat-radio-button>
+            <mat-radio-button value="female">Female</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field>
+            <input matInput type="number" placeholder="Average" formControlName="average" required>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button class="mat-raised-button" (click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+</mat-dialog-actions>
