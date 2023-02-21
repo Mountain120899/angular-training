@@ -9,7 +9,6 @@ import * as moment from 'moment';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [],
 })
 export class AppComponent implements OnInit, OnDestroy {
   users: User[] = [];
@@ -20,16 +19,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor() {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     const source = interval(1000);
-    /* this.arrObservables['timer'] = source.subscribe()...; */
-    /* ngOndetroy() {
-      loop array > unsubscribe()
-    } */
-    /* Subject > complete() */
     this.subscriptions.add (source.subscribe(() => {
       this.date = moment().format("dddd, Do MMMM YYYY, h:mm:ss a");
     }));
+    console.log('cc');
   }
 
   ngOnDestroy(){
